@@ -56,6 +56,11 @@ player = Player("Megan", room['outside'])
 def display_current_position():
     print(f'\nYour current position: \n{player.current_room.name}\n\nClue: \n{player.current_room.description}\n')
 
+def display_inventory():
+    print('\nInventory:\n')
+    for item in player.inventory:
+        print(item)
+
 def move_player():
     if selection == "n":
         if player.current_room.n_to != None:
@@ -92,12 +97,13 @@ direction_options = {
 
 
 while selection != "q":
-    print("*" * 10)
+    print("*" * 20)
     display_current_position()
+    display_inventory()
     print("Select a direction to move in: ")
     for (key, value) in direction_options.items():
         print(f'[{key}] : {value}')
-    print("*" * 10) 
+    print("*" * 20) 
     selection = input()
     if selection.upper() in direction_options:
         move_player() 
