@@ -1,4 +1,7 @@
 from room import Room
+from player import Player
+
+
 
 # Declare all the rooms
 
@@ -53,9 +56,37 @@ newPlayer = Player('Damilola', 'outside')
 #
 # If the user enters "q", quit the game.
 
+name = input('Your name here: ')
+current_room = room[newPlayer.current_room]
+print(f'Hi! {name}. You are currently in {newPlayer.current_room}, {current_room.description}')
 
-name =input('Your name here: ')
 
-while True:
-    current_room = room[player.current_room]
-    print(f'')
+
+
+while True: 
+    
+    decision = input('Where would you like to go (South, North, East, West, Quit)?')
+    decision = decision.lower()
+
+    if decision == 'south'  and hasattr(current_room, "s_to"):
+        current_room = current_room.s_to
+        print(current_room)
+
+    elif decision == 'north'  and hasattr(current_room, "n_to"):
+        current_room = current_room.n_to
+        print(current_room)
+
+    elif decision == 'west' and hasattr(current_room, "w_to"):
+        current_room = current_room.w_to
+        print(current_room)
+
+    elif decision == 'east' and hasattr(current_room, "e_to"):
+        current_room = current_room.e_to
+        print(current_room)
+    
+    elif decision == 'quit':
+        print('Thank you for playing, come back soon!')
+        break
+
+    else: 
+        print('Direction does not exist!')
