@@ -53,11 +53,51 @@ player = Player("Megan", room['outside'])
 #
 # If the user enters "q", quit the game.
 
-def display_position():
+def display_current_position():
     print(f'Your current position: \n{player.current_room.name}\nClue: \n{player.current_room.description}')
+
+def move_player():
+    if selection == "n":
+        if player.current_room.n_to != None:
+            player.current_room = player.current_room.n_to 
+        else:
+            print("You have reached a dead end :( Try turning back the way you came!") 
+    elif selection == "s":
+        if player.current_room.s_to != None:
+            player.current_room = player.current_room.s_to 
+        else:
+            print("You have reached a dead end :( Try turning back the way you came!") 
+    elif selection == "e":
+        if player.current_room.e_to != None:
+            player.current_room = player.current_room.e_to 
+        else:
+            print("You have reached a dead end :( Try turning back the way you came!")    
+    elif selection == "w":
+        if player.current_room.w_to != None:
+            player.current_room = player.current_room.w_to 
+        else:
+            print("You have reached a dead end :( Try turning back the way you came!")  
+          
+ 
 
 selection = ""
 
+direction_options = {
+    'n' : 'North',
+    's' : 'South',
+    'e' : 'East',
+    'w' : 'West',
+    'q' : 'Quit'
+}
+
+
 while selection != "q":
-    display_position()
-    selection = input("Select a direction to move in: ")
+    display_current_position()
+    print("Select a direction to move in: ")
+    for (key, value) in direction_options.items():
+        print(f'[{key}] : {value}')
+    selection = input()
+    if selection in direction_options:
+        move_player() 
+    else: 
+        print("Oops. Not a valid direction. Please try again.")    
