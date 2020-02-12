@@ -1,6 +1,6 @@
 from room import Room
 from player import Player
-
+from item import Item 
 # Declare all the rooms
 
 room = {
@@ -34,6 +34,8 @@ room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
+room['outside'].add_item(Item("key", "used to open doors"))
+
 #
 # Main
 #
@@ -55,11 +57,14 @@ player = Player("Megan", room['outside'])
 
 def display_current_position():
     print(f'\nYour current position: \n{player.current_room.name}\n\nClue: \n{player.current_room.description}\n')
+    print('Room Items:')
+    for item in player.current_room.items:
+        print(item)
 
 def display_inventory():
     print('\nInventory:\n')
     for item in player.inventory:
-        print(item)
+        print(item.name)
 
 def move_player():
     if selection == "n":
@@ -94,7 +99,6 @@ direction_options = {
     'W' : 'West',
     'Q' : 'Quit'
 }
-
 
 while selection != "q":
     print("*" * 20)
