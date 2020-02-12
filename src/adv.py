@@ -53,8 +53,11 @@ player = Player("Megan", room['outside'])
 #
 # If the user enters "q", quit the game.
 
+def display_position():
+    print(f'Your current position: \n{player.current_room.name}\nClue: \n{player.current_room.description}')
+
 selection = ""
 
 while selection != "q":
-    print(f'Hello, {player.name}!\nYour current position: \n{player.current_room.name}\nClue: \n{player.current_room.description}')
+    display_position()
     selection = input("Select a direction to move in: ")
