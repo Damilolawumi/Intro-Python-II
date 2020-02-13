@@ -18,8 +18,7 @@ the distance, but there is no way across the chasm."""),
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+chamber! The only exit is to the south."""),
 }
 
 
@@ -35,6 +34,10 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 room['outside'].add_item(Item("key", "used to open doors"))
+room['foyer'].add_item(Item("sword", "used to slay monsters"))
+room['overlook'].add_item(Item("coins", "used to buy swords"))
+room['narrow'].add_item(Item("gem", "precious jewel"))
+room['treasure'].add_item(Item("treasure", "contains lots of precious jewels and coins"))
 
 #
 # Main
@@ -55,11 +58,14 @@ room['outside'].add_item(Item("key", "used to open doors"))
 # If the user enters "q", quit the game.
 
 def start_game():
-    print('Welcome')
+    print("*" * 20)
+    print("Welcome to my adventure game!")
+    print("Navigate through all areas of the game and try to find the hidden treasure. \nBonus points for picking up objects along the way.\n")
     print('Please enter the name of your player: ')
     name = input()
     global player 
     player = Player(name, room['outside'])
+    print("*" * 20)
 
 def display_current_position_and_items():
     print(f'Player: \n{player.name}\n')
