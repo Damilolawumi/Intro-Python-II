@@ -67,11 +67,13 @@ def display_inventory():
         print(item.name)
 
 def move_player():
-    if getattr(player.current_room, f'{selection}_to') != None:
+    if selection.upper() in direction_options:
+        if getattr(player.current_room, f'{selection}_to') != None:
             player.current_room = getattr(player.current_room, f'{selection}_to')
-    else:
-        print("\nYou have reached a dead end :( Try turning back the way you came!") 
-       
+        else:
+            print("\nYou have reached a dead end :( Try turning back the way you came!") 
+    else: 
+        print("\nOops. Not a valid direction. Please try again.")    
  
 
 selection = ""
@@ -80,8 +82,7 @@ direction_options = {
     'N' : 'North',
     'S' : 'South',
     'E' : 'East',
-    'W' : 'West',
-    'Q' : 'Quit'
+    'W' : 'West'
 }
 
 while selection != "q":
@@ -91,9 +92,9 @@ while selection != "q":
     print("Select a direction to move in: ")
     for (key, value) in direction_options.items():
         print(f'[{key}] : {value}')
+    print('[Q] : Quit')
     print("*" * 20) 
     selection = input()
-    if selection.upper() in direction_options:
+    if selection != 'q':
         move_player() 
-    else: 
-        print("\nOops. Not a valid direction. Please try again.")       
+          
