@@ -52,23 +52,23 @@ while True:
     current_room = player.current_room
 
     if path == 'n':
-        print(f'You chose the north path which leads to the foyer')
+        print(f'You chose the north .... Good choice')
         next_room = player.current_room.n_to
         player.move_the_player(next_room)
 
     elif path == 's':
-        print(f"You chose south...")
+        print(f"You chose south...Thats really amazing")
         next_room = player.current_room.s_to
         player.move_the_player(next_room)  
  
                   
     elif path == 'w':
-        print(f'You chose west')
+        print(f'You chose west...Thats not weird at all')
         next_room = player.current_room.w_to
         player.move_the_player(next_room)
 
     elif path == 'e':
-        print(f"You chose east...")
+        print(f"You chose east...cooool move")
         next_room = player.current_room.e_to
         player.move_the_player(next_room)
 
