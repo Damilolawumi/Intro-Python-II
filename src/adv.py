@@ -69,6 +69,7 @@ def start_game():
 
 def display_current_position_and_items():
     print(f'Player: \n{player.name}\n')
+    print(f'Score: \n{player.score}\n')
     print(f'Your current position: \n{player.current_room.name}\n')
     print(f'Clue: \n{player.current_room.description}\n')
     print('Room Items:')
@@ -96,6 +97,10 @@ def grab_item(item):
         if obj.name == item:
             player.current_room.remove_item(obj)
             player.grab_item(obj)
+            if obj.name != 'treasure':
+                player.score += 10
+            else:
+                player.score += 100    
             print(obj.on_take())
         else:
             print(f'Oops! {player.current_room.name} does not contain {item}. Try again.')  
@@ -105,6 +110,8 @@ def drop_item(item):
         if obj.name == item:
             player.drop_item(obj)
             player.current_room.add_item(obj)
+            if obj.name != 'treasure':
+                player.score -= 10
             print(obj.on_drop())
         else:
             print(f'Oops! Your inventory does not contain {item}. Try again.')    
