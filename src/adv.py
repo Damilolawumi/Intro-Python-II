@@ -97,6 +97,20 @@ def drop_item(item):
         else:
             print(f'Oops! Your inventory does not contain {item}. Try again.')    
 
+def play():
+    if selection == 'm':
+        move_player()  
+    elif selection[:4] == 'grab' or selection[:4] == 'drop':
+        action = selection[:4]
+        obj = selection[5:]
+        if action == 'grab':
+            grab_item(obj)
+        elif action == 'drop':   
+            drop_item(obj)
+    else:
+        print(f'Oops! not a valid game option. Try again')
+
+
 selection = ""
 
 quit_game = False
@@ -124,17 +138,8 @@ while quit_game == False:
     print('[q] : Quit game')
     print("*" * 20) 
     selection = input()
-    if selection == 'm':
-        move_player()  
-    elif selection[:4] == 'grab' or selection[:4] == 'drop':
-        action = selection[:4]
-        obj = selection[5:]
-        if action == 'grab':
-            grab_item(obj)
-        elif action == 'drop':   
-            drop_item(obj)
-    elif selection == 'q':
+    if selection == 'q':
        print(f'Thank you for playing, {player.name}. Goodbye!')
        quit_game = True
     else:
-        print(f'Oops! not a valid game option. Try again')      
+       play()      
