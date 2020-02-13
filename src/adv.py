@@ -1,5 +1,7 @@
 from player import Player
 from room import Room
+from item import Item
+
 # Declare all the rooms
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -28,7 +30,7 @@ room['treasure'].s_to = room['narrow']
 # Main
 #
 # Make a new player object that is currently in the 'outside' room.
-newPlayer = Player('Damilola', room['outside'])
+player = Player('Damilola', room['outside'])
 
 #
 # * Prints the current room name
@@ -40,61 +42,40 @@ newPlayer = Player('Damilola', room['outside'])
 #
 # If the user enters "q", quit the game.
 
-selection = None
+path = ''
 
-print('Welcome to the adventure island')
+error = "Sorry, you can not go in that direction please chose n, w, e or s"
 
-while selection != 'q':
-    print(F"{newPlayer.name} is in {newPlayer.current_room.name}")
-    selection = str(input('Select direction of movement\n[n] North  [e] East  [s] South  [w] West\n'))
-    if 'Outside' in newPlayer.current_room.name:
-        if selection == "n":
-            newPlayer.current_room = room["foyer"]
-        elif (selection == "e") or (selection =="s") or (selection =="w"):
-            print('Error, you cannot go that way')
-        else:
-            print('Kindly pick one cardinal point')
+while True:
+    print(f'welcome {player.name} to this amazing adventure.\nYou are currently in the {player.current_room} ')
+    path = input(f'Please choose a direction to start: n, w, e or s\n')
+    current_room = player.current_room
 
-    elif 'Foyer' in newPlayer.current_room.name:
-        if selection == "n":
-            newPlayer.current_room = room["overlook"]
-        elif selection == "s":
-            newPlayer.current_room = room["outside"]
-        elif selection == "e":
-            newPlayer.current_room = room["narrow"]
-        elif (selection =="w"):
-            print('Error, you cannot go that way')
-        else:
-            print('Kindly pick one cardinal point')
+    if path == 'n':
+        print(f'You chose the north path which leads to the foyer')
+        next_room = player.current_room.n_to
+        player.move_the_player(next_room)
 
-    elif 'Narrow' in newPlayer.current_room.name:
+    elif path == 's':
+        print(f"You chose south...")
+        next_room = player.current_room.s_to
+        player.move_the_player(next_room)  
+ 
+                  
+    elif path == 'w':
+        print(f'You chose west')
+        next_room = player.current_room.w_to
+        player.move_the_player(next_room)
 
-        if selection == "n":
-            newPlayer.current_room = room["treasure"]
-        elif selection == "w":
-            newPlayer.current_room = room["foyer"]
-        elif (selection == "e") or (selection =="s"):
-            print('Error, you cannot go that way')
-        else:
-            print('Kindly pick one cardinal point')
+    elif path == 'e':
+        print(f"You chose east...")
+        next_room = player.current_room.e_to
+        player.move_the_player(next_room)
 
-    elif 'Treasure' in newPlayer.current_room.name:
-
-        if selection == "s":
-            newPlayer.current_room = room["narrow"]
-        elif (selection == "n") or (selection =="e") or (selection =="w"):
-            print('Error, you cannot go that way')
-        else:
-            print('Kindly pick one cardinal point')
-
-    elif 'Overlook' in newPlayer.current_room.name:
-
-        if selection == "s":
-            newPlayer.current_room = room["foyer"]
-        elif (selection == "n") or (selection =="e") or (selection =="w"):
-            print('Error, you cannot go that way')
-        else:
-            print('Kindly pick one cardinal point')
+    
+    elif path == 'q':
+        print(f"oops... You have decided to quit the game.")
+        break
 
     else:
-        print("you're in no mans land")
+        print(error)          
