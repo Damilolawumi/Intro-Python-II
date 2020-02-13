@@ -1,32 +1,21 @@
-from room import Room
 from player import Player
-
-
-
+from room import Room
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons"),
-
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
-
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
 the distance, but there is no way across the chasm."""),
-
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
-
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
-
-
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -35,17 +24,12 @@ room['overlook'].s_to = room['foyer']
 room['narrow'].w_to = room['foyer']
 room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
-
 #
 # Main
 #
-
 # Make a new player object that is currently in the 'outside' room.
+newPlayer = Player('Damilola', room['outside'])
 
-
-newPlayer = Player('Damilola', 'outside')
-
-# Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
@@ -56,37 +40,51 @@ newPlayer = Player('Damilola', 'outside')
 #
 # If the user enters "q", quit the game.
 
-name = input('Your name here: ')
-current_room = room[newPlayer.current_room]
-print(f'Hi! {name}. You are currently in {newPlayer.current_room}, {current_room.description}')
+selection = None
 
-
-
-
-while True: 
-    
-    decision = input('Where would you like to go (South, North, East, West, Quit)?')
-    decision = decision.lower()
-
-    if decision == 'south'  and hasattr(current_room, "s_to"):
-        current_room = current_room.s_to
-        print(current_room)
-
-    elif decision == 'north'  and hasattr(current_room, "n_to"):
-        current_room = current_room.n_to
-        print(current_room)
-
-    elif decision == 'west' and hasattr(current_room, "w_to"):
-        current_room = current_room.w_to
-        print(current_room)
-
-    elif decision == 'east' and hasattr(current_room, "e_to"):
-        current_room = current_room.e_to
-        print(current_room)
-    
-    elif decision == 'quit':
-        print('Thank you for playing, come back soon!')
-        break
-
-    else: 
-        print('Direction does not exist!')
+while selection != 'q':
+    print(F"{newPlayer.name} is in {newPlayer.current_room.name}")
+    selection = str(input('Select direction of movement\n[n] North  [e] East  [s] South  [w] West\n'))
+    if 'Outside' in newPlayer.current_room.name:
+        if selection == "n":
+            newPlayer.current_room = room["foyer"]
+        elif (selection == "e") or (selection =="s") or (selection =="w"):
+            print('Error, you cannot go that way')
+        else:
+            print('Kindly pick one cardinal point')
+    elif 'Foyer' in newPlayer.current_room.name:
+        if selection == "n":
+            newPlayer.current_room = room["overlook"]
+        elif selection == "s":
+            newPlayer.current_room = room["outside"]
+        elif selection == "e":
+            newPlayer.current_room = room["narrow"]
+        elif (selection =="w"):
+            print('Error, you cannot go that way')
+        else:
+            print('Kindly pick one cardinal point')
+    elif 'Narrow' in newPlayer.current_room.name:
+        if selection == "n":
+            newPlayer.current_room = room["treasure"]
+        elif selection == "w":
+            newPlayer.current_room = room["foyer"]
+        elif (selection == "e") or (selection =="s"):
+            print('Error, you cannot go that way')
+        else:
+            print('Kindly pick one cardinal point')
+    elif 'Treasure' in newPlayer.current_room.name:
+        if selection == "s":
+            newPlayer.current_room = room["narrow"]
+        elif (selection == "n") or (selection =="e") or (selection =="w"):
+            print('Error, you cannot go that way')
+        else:
+            print('Kindly pick one cardinal point')
+    elif 'Overlook' in newPlayer.current_room.name:
+        if selection == "s":
+            newPlayer.current_room = room["foyer"]
+        elif (selection == "n") or (selection =="e") or (selection =="w"):
+            print('Error, you cannot go that way')
+        else:
+            print('Kindly pick one cardinal point')
+    else:
+        print("you're in no mans land")
