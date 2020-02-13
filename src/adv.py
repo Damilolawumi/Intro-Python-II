@@ -90,6 +90,7 @@ def grab_item(item):
         if obj.name == item:
             player.current_room.remove_item(obj)
             player.grab_item(obj)
+            print(obj.on_take())
         else:
             print(f'Oops! {player.current_room.name} does not contain {item}. Try again.')  
 
@@ -98,6 +99,7 @@ def drop_item(item):
         if obj.name == item:
             player.drop_item(obj)
             player.current_room.add_item(obj)
+            print(obj.on_drop())
         else:
             print(f'Oops! Your inventory does not contain {item}. Try again.')    
 
