@@ -42,6 +42,8 @@ newPlayer = Player('Damilola', room['outside'])
 
 selection = None
 
+print('Welcome to the adventure island')
+
 while selection != 'q':
     print(F"{newPlayer.name} is in {newPlayer.current_room.name}")
     selection = str(input('Select direction of movement\n[n] North  [e] East  [s] South  [w] West\n'))
@@ -52,6 +54,7 @@ while selection != 'q':
             print('Error, you cannot go that way')
         else:
             print('Kindly pick one cardinal point')
+
     elif 'Foyer' in newPlayer.current_room.name:
         if selection == "n":
             newPlayer.current_room = room["overlook"]
@@ -63,7 +66,9 @@ while selection != 'q':
             print('Error, you cannot go that way')
         else:
             print('Kindly pick one cardinal point')
+
     elif 'Narrow' in newPlayer.current_room.name:
+
         if selection == "n":
             newPlayer.current_room = room["treasure"]
         elif selection == "w":
@@ -72,19 +77,24 @@ while selection != 'q':
             print('Error, you cannot go that way')
         else:
             print('Kindly pick one cardinal point')
+
     elif 'Treasure' in newPlayer.current_room.name:
+
         if selection == "s":
             newPlayer.current_room = room["narrow"]
         elif (selection == "n") or (selection =="e") or (selection =="w"):
             print('Error, you cannot go that way')
         else:
             print('Kindly pick one cardinal point')
+
     elif 'Overlook' in newPlayer.current_room.name:
+
         if selection == "s":
             newPlayer.current_room = room["foyer"]
         elif (selection == "n") or (selection =="e") or (selection =="w"):
             print('Error, you cannot go that way')
         else:
             print('Kindly pick one cardinal point')
+
     else:
         print("you're in no mans land")
