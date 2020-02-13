@@ -58,8 +58,10 @@ player = Player("Megan", room['outside'])
 def display_current_position():
     print(f'\nYour current position: \n{player.current_room.name}\n\nClue: \n{player.current_room.description}\n')
     print('Room Items:')
+    i = 0
     for item in player.current_room.items:
-        print(item)
+        print(f'[{i}] : {item}')
+        i += 1
 
 def display_inventory():
     print('\nInventory:\n')
@@ -67,6 +69,10 @@ def display_inventory():
         print(item.name)
 
 def move_player():
+    print("Select a direction to move in: ")
+    for (key, value) in direction_options.items():
+        print(f'[{key}] : {value}')
+    selection = input()    
     if selection.upper() in direction_options:
         if getattr(player.current_room, f'{selection}_to') != None:
             player.current_room = getattr(player.current_room, f'{selection}_to')
@@ -74,9 +80,26 @@ def move_player():
             print("\nYou have reached a dead end :( Try turning back the way you came!") 
     else: 
         print("\nOops. Not a valid direction. Please try again.")    
- 
+
+def grab_item(item):
+    for obj in player.current_room.items:
+        if obj.name == item:
+            player.current_room.remove_item(obj)
+            player.grab_item(obj)
+        else:
+            print(f'Oops! {player.current_room.name} does not contain {item}. Try again.')  
+
+def drop_item(item):
+    for obj in player.inventory:
+        if obj.name == item:
+            player.drop_item(obj)
+            player.current_room.add_item(obj)
+        else:
+            print(f'Oops! Your inventory does not contain {item}. Try again.')    
 
 selection = ""
+
+quit_game = False
 
 direction_options = {
     'N' : 'North',
@@ -85,16 +108,33 @@ direction_options = {
     'W' : 'West'
 }
 
-while selection != "q":
+game_options = {
+    'drop + item' : 'Drop an item in your inventory',
+    'grab + item' : 'Grab an item in the current room',
+    'm' : 'Move to a different room'
+}
+
+while quit_game == False:
     print("*" * 20)
     display_current_position()
     display_inventory()
-    print("Select a direction to move in: ")
-    for (key, value) in direction_options.items():
+    print("What would you like to do?")
+    for (key, value) in game_options.items():
         print(f'[{key}] : {value}')
-    print('[Q] : Quit')
+    print('[q] : Quit game')
     print("*" * 20) 
     selection = input()
-    if selection != 'q':
-        move_player() 
-          
+    if selection == 'm':
+        move_player()  
+    elif selection[:4] == 'grab' or selection[:4] == 'drop':
+        action = selection[:4]
+        obj = selection[5:]
+        if action == 'grab':
+            grab_item(obj)
+        elif action == 'drop':   
+            drop_item(obj)
+    elif selection == 'q':
+       print(f'Thank you for playing, {player.name}. Goodbye!')
+       quit_game = True
+    else:
+        print(f'Oops! not a valid game option. Try again')      
