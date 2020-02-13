@@ -42,7 +42,6 @@ room['outside'].add_item(Item("key", "used to open doors"))
 
 # Make a new player object that is currently in the 'outside' room.
 
-player = Player("Megan", room['outside'])
 
 # Write a loop that:
 #
@@ -55,7 +54,15 @@ player = Player("Megan", room['outside'])
 #
 # If the user enters "q", quit the game.
 
+def start_game():
+    print('Welcome')
+    print('Please enter the name of your player: ')
+    name = input()
+    global player 
+    player = Player(name, room['outside'])
+
 def display_current_position_and_items():
+    print(f'Player: \n{player.name}\n')
     print(f'Your current position: \n{player.current_room.name}\n')
     print(f'Clue: \n{player.current_room.description}\n')
     print('Room Items:')
@@ -106,9 +113,11 @@ def play():
             drop_item(obj)
     else:
         print(f'Oops! not a valid game option. Try again')
-
+    
 
 selection = ""
+
+player = None
 
 quit_game = False
 
@@ -126,7 +135,8 @@ game_options = {
     'q' : 'Quit game'
 }
 
-while quit_game == False:
+start_game()
+while quit_game == False and player != None:
     print("*" * 20)
     display_current_position_and_items()
     print("\nWhat would you like to do?")
