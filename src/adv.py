@@ -67,27 +67,11 @@ def display_inventory():
         print(item.name)
 
 def move_player():
-    if selection == "n":
-        if player.current_room.n_to != None:
-            player.current_room = player.current_room.n_to 
-        else:
-            print("\nYou have reached a dead end :( Try turning back the way you came!") 
-    elif selection == "s":
-        if player.current_room.s_to != None:
-            player.current_room = player.current_room.s_to 
-        else:
-            print("\nYou have reached a dead end :( Try turning back the way you came!") 
-    elif selection == "e":
-        if player.current_room.e_to != None:
-            player.current_room = player.current_room.e_to 
-        else:
-            print("\nYou have reached a dead end :( Try turning back the way you came!")    
-    elif selection == "w":
-        if player.current_room.w_to != None:
-            player.current_room = player.current_room.w_to 
-        else:
-            print("\nYou have reached a dead end :( Try turning back the way you came!")  
-          
+    if getattr(player.current_room, f'{selection}_to') != None:
+            player.current_room = getattr(player.current_room, f'{selection}_to')
+    else:
+        print("\nYou have reached a dead end :( Try turning back the way you came!") 
+       
  
 
 selection = ""
